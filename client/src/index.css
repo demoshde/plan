@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'IBM Plex Sans', 'Segoe UI', Arial, sans-serif;
+  background-color: #f5f6f8;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e8eaed;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c5cb;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a5ab;
+}
+
+/* Status colors */
+.status-down { background-color: #ffebee !important; color: #c0392b; }
+.status-loaded { background-color: #e8f5e9 !important; color: #27ae60; }
+.status-empty { background-color: #fff8e1 !important; color: #f39c12; }
+.status-hf { background-color: #e3f2fd !important; color: #2196f3; }
+.status-gsk { background-color: #f3e5f5 !important; color: #9c27b0; }
+.status-inspection { background-color: #eceff1 !important; color: #607d8b; }
+
+/* Drag and drop styles */
+.dragging {
+  opacity: 0.6;
+  border: 2px dashed #d4a843 !important;
+  background: #fffef5 !important;
+}
+
+.drag-over {
+  background: #f5f8ff !important;
+  border-color: #d4a843 !important;
+}
+
+/* Time violation */
+.val-red {
+  background-color: #fce4e4 !important;
+  color: #c0392b;
+  font-weight: 700;
+}
+
+/* Hide dropdown arrows */
+.data-row select,
+select.no-arrow {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+}
+
+/* Date picker hidden overlay */
+.date-wrapper {
+  position: relative;
+  width: 100%;
+  height: 22px;
+}
+
+.master-date-input {
+  width: 100%;
+  height: 100%;
+  padding: 3px 4px;
+  border: none;
+  border-radius: 3px;
+  font-size: 9px;
+  background: transparent;
+  color: transparent;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.master-date-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.date-display {
+  padding: 4px 6px;
+  border: none;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  background: #f5f5f5;
+  color: #2c3e50;
+  cursor: pointer;
+  text-align: center;
+  min-height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.date-display:hover {
+  background: #e8e8e8;
+}
