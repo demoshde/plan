@@ -3,6 +3,19 @@ import Plan from '../models/Plan.js';
 
 const router = express.Router();
 
+// Get plans by date range
+router.get('/range', async (req, res) => {
+  try {
+    const { startDate, endDate } = req.query;
+    const plans = await Plan.find({
+      date: { $gte: startDate, $lte: endDate }
+    });
+    res.json(plans);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Get plans for a month
 router.get('/month/:year/:month', async (req, res) => {
   try {

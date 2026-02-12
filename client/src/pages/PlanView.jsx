@@ -22,6 +22,26 @@ function PlanView() {
   const monthStart = startOfMonth(targetDate);
   const monthEnd = endOfMonth(targetDate);
 
+  // Calculate visible calendar range (including padding days from other months)
+  const getVisibleDateRange = () => {
+    const firstDay = getDay(monthStart); // 0=Sun, 1=Mon, ..., 6=Sat
+    const adjustedFirstDay = (firstDay + 1) % 7; // Convert to Saturday-start
+    
+    // Days from previous month
+    const prevMonthDays = adjustedFirstDay;
+    const visibleStart = new Date(monthStart);
+    visibleStart.setDate(visibleStart.getDate() - prevMonthDays);
+    
+    // Days remaining after current month to fill week
+    const daysInMonth = monthEnd.getDate();
+    const totalDaysSoFar = prevMonthDays + daysInMonth;
+    const remainingDays = totalDaysSoFar % 7 === 0 ? 0 : 7 - (totalDaysSoFar % 7);
+    const visibleEnd = new Date(monthEnd);
+    visibleEnd.setDate(visibleEnd.getDate() + remainingDays);
+    
+    return { visibleStart, visibleEnd };
+  };
+
   useEffect(() => {
     fetchMonthData();
   }, [planMonthOffset]);
@@ -29,11 +49,12 @@ function PlanView() {
   const fetchMonthData = async () => {
     setLoading(true);
     try {
-      const startDate = format(monthStart, 'yyyy-MM-dd');
-      const endDate = format(monthEnd, 'yyyy-MM-dd');
+      const { visibleStart, visibleEnd } = getVisibleDateRange();
+      const startDate = format(visibleStart, 'yyyy-MM-dd');
+      const endDate = format(visibleEnd, 'yyyy-MM-dd');
 
       const [plansRes, targetRes, dispatchRes, incidentsRes, holidaysRes] = await Promise.all([
-        planApi.getByMonth(year, month),
+        planApi.getByRange(startDate, endDate),
         planApi.getMonthlyTarget(year, month),
         dispatchApi.getByRange(startDate, endDate),
         incidentApi.getByMonth(year, month),
@@ -42,7 +63,8 @@ function PlanView() {
 
       // Process daily plans
       const plans = {};
-      plansRes.data.forEach(p => {
+      const plansData = Array.isArray(plansRes.data) ? plansRes.data : [];
+      plansData.forEach(p => {
         plans[p.date] = p.targetCount;
       });
       setDailyPlans(plans);

@@ -32,6 +32,7 @@ export const dispatchApi = {
 // Plans
 export const planApi = {
   getByMonth: (year, month) => api.get(`/plans/month/${year}/${month}`),
+  getByRange: (startDate, endDate) => api.get('/plans/range', { params: { startDate, endDate } }),
   getByDate: (date) => api.get(`/plans/${date}`),
   update: (date, targetCount) => api.put(`/plans/${date}`, { targetCount }),
   getMonthlyTarget: (year, month) => api.get(`/plans/monthly/${year}/${month}`),
