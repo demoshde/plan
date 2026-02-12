@@ -79,17 +79,24 @@ function PlanView() {
       dispatchRes.data.forEach(d => {
         const dayCount = d.rows.filter(r => r.convoyName).length;
         actuals[d.date] = dayCount;
-        if (dayCount > peakDay) peakDay = dayCount;
+        
+        const dispatchDate = new Date(d.date);
+        const isCurrentMonth = dispatchDate >= monthStart && dispatchDate <= monthEnd;
+        
+        if (isCurrentMonth && dayCount > peakDay) peakDay = dayCount;
         
         d.rows.forEach(row => {
           if (row.convoyName) {
-            total++;
-            if (row.returned) returned++;
-            if (row.convoyName.includes('SGC')) sgc++;
-            else if (row.convoyName.includes('KBTL')) kbtl++;
-            else if (row.convoyName.includes('TE')) te++;
+            // Only count in KPI totals if in current month
+            if (isCurrentMonth) {
+              total++;
+              if (row.returned) returned++;
+              if (row.convoyName.includes('SGC')) sgc++;
+              else if (row.convoyName.includes('KBTL')) kbtl++;
+              else if (row.convoyName.includes('TE')) te++;
+            }
             
-            if (row.startTime && row.endTime) {
+            if (row.startTime && row.endTime && isCurrentMonth) {
               const [h1, m1] = row.startTime.split(':').map(Number);
               const [h2, m2] = row.endTime.split(':').map(Number);
               let startMin = h1 * 60 + m1;
@@ -116,6 +123,12 @@ function PlanView() {
         ? daysInMonth - today.getDate()
         : daysInMonth;
 
+      // Count days with actuals in current month only
+      const daysWithActuals = Object.keys(actuals).filter(dateKey => {
+        const d = new Date(dateKey);
+        return d >= monthStart && d <= monthEnd && actuals[dateKey] > 0;
+      }).length;
+
       setKpi({
         total,
         returned,
@@ -126,7 +139,7 @@ function PlanView() {
         kbtl,
         te,
         peakDay,
-        dailyAvg: Object.keys(actuals).length > 0 ? Math.round(total / Object.keys(actuals).length) : 0,
+        dailyAvg: daysWithActuals > 0 ? Math.round(total / daysWithActuals) : 0,
         daysLeft
       });
 
