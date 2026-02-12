@@ -80,8 +80,9 @@ function PlanView() {
         const dayCount = d.rows.filter(r => r.convoyName).length;
         actuals[d.date] = dayCount;
         
-        const dispatchDate = new Date(d.date);
-        const isCurrentMonth = dispatchDate >= monthStart && dispatchDate <= monthEnd;
+        // Check if date belongs to current month using string comparison
+        const [dispatchYear, dispatchMonth] = d.date.split('-').map(Number);
+        const isCurrentMonth = dispatchYear === year && dispatchMonth === month;
         
         if (isCurrentMonth && dayCount > peakDay) peakDay = dayCount;
         
@@ -125,8 +126,8 @@ function PlanView() {
 
       // Count days with actuals in current month only
       const daysWithActuals = Object.keys(actuals).filter(dateKey => {
-        const d = new Date(dateKey);
-        return d >= monthStart && d <= monthEnd && actuals[dateKey] > 0;
+        const [yr, mo] = dateKey.split('-').map(Number);
+        return yr === year && mo === month && actuals[dateKey] > 0;
       }).length;
 
       setKpi({
