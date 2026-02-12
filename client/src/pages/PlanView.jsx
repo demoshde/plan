@@ -449,7 +449,7 @@ function PlanView() {
                               min="0"
                               placeholder="—"
                             />
-                            {plan > 0 && (
+                            {(plan > 0 || actual > 0) && (
                               <div className={`text-[10px] mt-1 ${dayDiff >= 0 ? 'text-green-600' : 'text-red-500'}`}>
                                 Actual: {actual} ({dayDiff >= 0 ? '+' : ''}{dayDiff})
                               </div>
