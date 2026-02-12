@@ -21,21 +21,46 @@ function DispatchRow({ dateKey, rowIndex, row }) {
 
   const generateTimeOptions = (type) => {
     const times = [''];
-    const ranges = type === 'start' 
-      ? [[0, 12], [18, 24]]
-      : [[0, 24]];
     
-    ranges.forEach(([startH, endH]) => {
-      for (let h = startH; h < endH; h++) {
-        for (let m = 0; m < 60; m += 30) {
+    if (type === 'start') {
+      // Start time: 06:00 to 14:00, 10 min increments
+      for (let h = 6; h <= 14; h++) {
+        for (let m = 0; m < 60; m += 10) {
+          if (h === 14 && m > 0) break; // Stop at 14:00
           times.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
         }
       }
-    });
+    } else {
+      // End time: 10:30 to 01:30 (next day), 10 min increments
+      // First part: 10:30 to 23:50
+      for (let h = 10; h < 24; h++) {
+        const startMin = (h === 10) ? 30 : 0;
+        for (let m = startMin; m < 60; m += 10) {
+          times.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
+        }
+      }
+      // Second part: 00:00 to 01:30
+      for (let h = 0; h <= 1; h++) {
+        for (let m = 0; m < 60; m += 10) {
+          if (h === 1 && m > 30) break; // Stop at 01:30
+          times.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
+        }
+      }
+    }
     return times;
   };
 
-  const convoyOptions = ['', ...convoys.map(c => c.name)];
+  // Sort convoys by fleet prefix then by number
+  const sortedConvoys = [...convoys].sort((a, b) => {
+    const matchA = a.name.match(/^([A-Z]+)-?(\d+)$/);
+    const matchB = b.name.match(/^([A-Z]+)-?(\d+)$/);
+    if (matchA && matchB) {
+      if (matchA[1] !== matchB[1]) return matchA[1].localeCompare(matchB[1]);
+      return parseInt(matchA[2]) - parseInt(matchB[2]);
+    }
+    return a.name.localeCompare(b.name);
+  });
+  const convoyOptions = ['', ...sortedConvoys.map(c => c.name)];
   const totalClass = isViolation(row.totalHours) ? 'val-red' : '';
 
   const handleDragStart = (e) => {
