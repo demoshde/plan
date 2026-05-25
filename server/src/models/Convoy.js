@@ -8,7 +8,7 @@ const convoySchema = new mongoose.Schema({
   },
   fleet: {
     type: String,
-    enum: ['SGC', 'KBTL', 'TE'],
+    enum: ['SGC', 'KBTL', 'TE', 'KS', 'GT'],
     required: true
   },
   status: {

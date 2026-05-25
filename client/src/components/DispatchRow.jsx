@@ -9,6 +9,8 @@ function DispatchRow({ dateKey, rowIndex, row }) {
     if (!name) return '#999';
     if (name.includes('SGC')) return '#00BFFF';
     if (name.includes('KBTL')) return '#FF6600';
+    if (name.includes('KS')) return '#22C55E';
+    if (name.includes('GT')) return '#A855F7';
     if (name.includes('TE')) return '#FFD700';
     return '#999';
   };

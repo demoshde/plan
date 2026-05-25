@@ -19,6 +19,8 @@ function ConvoysModal({ onClose }) {
     const upper = name.toUpperCase();
     if (upper.startsWith('SGC')) return 'SGC';
     if (upper.startsWith('KBTL')) return 'KBTL';
+    if (upper.startsWith('KS')) return 'KS';
+    if (upper.startsWith('GT')) return 'GT';
     if (upper.startsWith('TE')) return 'TE';
     return null;
   };
@@ -31,7 +33,7 @@ function ConvoysModal({ onClose }) {
     }
     const fleet = detectFleet(name);
     if (!fleet) {
-      setError('Name must start with SGC, KBTL, or TE');
+      setError('Name must start with SGC, KBTL, TE, KS, or GT');
       return;
     }
     try {
@@ -87,7 +89,7 @@ function ConvoysModal({ onClose }) {
   };
 
   // Group convoys by fleet and sort by number
-  const byFleet = { SGC: [], KBTL: [], TE: [] };
+  const byFleet = { SGC: [], KBTL: [], TE: [], KS: [], GT: [] };
   convoys.forEach(c => {
     if (byFleet[c.fleet]) byFleet[c.fleet].push(c);
   });
@@ -142,7 +144,7 @@ function ConvoysModal({ onClose }) {
                 value={newName}
                 onChange={(e) => { setNewName(e.target.value.toUpperCase()); setError(''); }}
                 onKeyDown={handleKeyDown}
-                placeholder="SGC-101, KBTL-55, TE-12..."
+                placeholder="SGC-101, KBTL-55, TE-12, KS-1, GT-1..."
                 className="flex-1 p-2 border border-slate-200 rounded text-sm focus:ring-1 focus:ring-slate-400 outline-none font-mono"
                 autoFocus
               />
@@ -162,13 +164,13 @@ function ConvoysModal({ onClose }) {
 
             {/* Convoy List */}
             <div className="p-4 max-h-[40vh] overflow-y-auto">
-              {['SGC', 'KBTL', 'TE'].map(fleet => (
+              {['SGC', 'KBTL', 'TE', 'KS', 'GT'].map(fleet => (
                 <div key={fleet} className="mb-4">
                   <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-2 pb-1 border-b border-slate-200 flex items-center gap-2">
                     <span 
                       className="w-2.5 h-2.5 rounded-full"
                       style={{ 
-                        background: fleet === 'SGC' ? '#00BFFF' : fleet === 'KBTL' ? '#FF6600' : '#FFD700'
+                        background: fleet === 'SGC' ? '#00BFFF' : fleet === 'KBTL' ? '#FF6600' : fleet === 'TE' ? '#FFD700' : fleet === 'KS' ? '#22C55E' : '#A855F7'
                       }}
                     />
                     {fleet} Fleet ({byFleet[fleet].length})
