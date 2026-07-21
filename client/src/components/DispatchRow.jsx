@@ -25,25 +25,25 @@ function DispatchRow({ dateKey, rowIndex, row }) {
     const times = [''];
     
     if (type === 'start') {
-      // Start time: 06:00 to 14:00, 10 min increments
+      // Start time: 06:00 to 14:00, 5 min increments
       for (let h = 6; h <= 14; h++) {
-        for (let m = 0; m < 60; m += 10) {
+        for (let m = 0; m < 60; m += 5) {
           if (h === 14 && m > 0) break; // Stop at 14:00
           times.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
         }
       }
     } else {
-      // End time: 10:30 to 01:30 (next day), 10 min increments
-      // First part: 10:30 to 23:50
+      // End time: 10:30 to 01:30 (next day), 5 min increments
+      // First part: 10:30 to 23:55
       for (let h = 10; h < 24; h++) {
         const startMin = (h === 10) ? 30 : 0;
-        for (let m = startMin; m < 60; m += 10) {
+        for (let m = startMin; m < 60; m += 5) {
           times.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
         }
       }
       // Second part: 00:00 to 01:30
       for (let h = 0; h <= 1; h++) {
-        for (let m = 0; m < 60; m += 10) {
+        for (let m = 0; m < 60; m += 5) {
           if (h === 1 && m > 30) break; // Stop at 01:30
           times.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
         }
