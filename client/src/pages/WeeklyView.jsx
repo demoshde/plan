@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { format } from 'date-fns';
 import useStore from '../store/useStore';
 import DayColumn from '../components/DayColumn';
 import Sidebar from '../components/Sidebar';
@@ -13,9 +14,13 @@ function WeeklyView() {
     fetchWeekData();
   }, []);
 
+  // Default the mobile single-day view to today (fallback to first day of week)
   useEffect(() => {
-    if (selectedDay > weekDays.length - 1) setSelectedDay(0);
-  }, [weekDays.length]);
+    if (weekDays.length === 0) return;
+    const todayKey = format(new Date(), 'yyyy-MM-dd');
+    const todayIdx = weekDays.findIndex((d) => d.dateKey === todayKey);
+    setSelectedDay(todayIdx >= 0 ? todayIdx : 0);
+  }, [weekDays]);
 
   if (loading && weekDays.length === 0) {
     return (
