@@ -112,19 +112,19 @@ function Header() {
   };
 
   return (
-    <header className="bg-primary-dark h-16 px-8 flex items-center justify-between border-b-[3px] border-accent-gold">
+    <header className="bg-primary-dark min-h-16 px-3 md:px-8 py-2 md:py-0 flex flex-col md:flex-row items-center md:justify-between gap-3 md:gap-0 border-b-[3px] border-accent-gold">
       {/* Logo Section */}
-      <div className="flex items-center gap-4">
-        <img src="https://forklift.olt.mn/logo.png" alt="OT Logistic" className="w-14 h-14 rounded object-contain" />
-        <div className="text-white text-xl font-bold tracking-tight">
+      <div className="flex items-center gap-3 md:gap-4 flex-wrap justify-center">
+        <img src="https://forklift.olt.mn/logo.png" alt="OT Logistic" className="w-10 h-10 md:w-14 md:h-14 rounded object-contain" />
+        <div className="text-white text-lg md:text-xl font-bold tracking-tight">
           OT <span className="text-accent-gold">Logistic</span>
         </div>
-        <div className="text-gray-400 text-xs font-medium uppercase tracking-wider ml-5 pl-5 border-l border-slate-600">
+        <div className="hidden lg:block text-gray-400 text-xs font-medium uppercase tracking-wider ml-5 pl-5 border-l border-slate-600">
           Logistics Management System
         </div>
         
         {/* Navigation Tabs */}
-        <nav className="flex gap-1 ml-6 pl-6 border-l border-slate-600">
+        <nav className="flex gap-1 md:ml-6 md:pl-6 md:border-l border-slate-600">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -165,9 +165,9 @@ function Header() {
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-3 md:gap-6 flex-wrap justify-center">
         {/* KPIs */}
-        <div className="flex items-center gap-4 mr-8 pr-8 border-r border-slate-600">
+        <div className="flex items-center gap-4 md:mr-8 md:pr-8 md:border-r border-slate-600">
           <div className="flex flex-col items-center gap-0.5">
             <span className="text-lg font-bold text-accent-gold">{currentKpi.total}</span>
             <span className="text-[9px] text-gray-400 uppercase tracking-wide">Dispatched</span>

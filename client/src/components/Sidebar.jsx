@@ -41,7 +41,7 @@ function Sidebar() {
   );
 
   return (
-    <div className="w-[220px] min-w-[220px] bg-white border border-gray-200 rounded-[6px] h-[calc(100vh-64px-48px-48px)] overflow-y-auto sticky top-0 mt-6 mr-6 mb-6 ml-0 shadow-[0_1px_3px_rgba(0,0,0,0.08)]">
+    <div className="w-full md:w-[220px] md:min-w-[220px] bg-white border border-gray-200 rounded-[6px] max-h-[60vh] md:h-[calc(100vh-64px-48px-48px)] overflow-y-auto static md:sticky top-0 mx-3 mb-6 md:mt-6 md:mr-6 md:mb-6 md:ml-0 shadow-[0_1px_3px_rgba(0,0,0,0.08)]">
       {/* Master List */}
       <div className="border-b border-gray-200">
         <table className="w-full border-collapse text-xs">

@@ -68,7 +68,7 @@ function HolidaysView() {
 
   return (
     <div className="p-3">
-      <div className="grid gap-3" style={{ gridTemplateColumns: '220px 1fr' }}>
+      <div className="grid gap-3 grid-cols-1 lg:grid-cols-[220px_1fr]">
         {/* Left Panel - Holiday List grouped by country */}
         <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
           <div className="bg-gradient-to-r from-slate-800 to-slate-700 text-white px-4 py-3 font-semibold text-sm flex justify-between items-center">
@@ -152,7 +152,7 @@ function HolidaysView() {
           <div className="bg-gradient-to-r from-slate-800 to-slate-700 text-white px-6 py-4 font-semibold">
             📅 Year Calendar {holidayYear}
           </div>
-          <div className="p-4 grid grid-cols-4 gap-4">
+          <div className="p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {months.map((month) => {
               const monthStart = startOfMonth(month);
               const monthEnd = endOfMonth(month);

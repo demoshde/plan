@@ -257,7 +257,7 @@ function PlanView() {
 
   return (
     <div className="p-3">
-      <div className="grid gap-3" style={{ gridTemplateColumns: '280px 1fr 240px' }}>
+      <div className="grid gap-3 grid-cols-1 lg:grid-cols-[280px_1fr_240px]">
         {/* Left Panel - KPIs */}
         <div className="flex flex-col gap-3.5">
           {/* Hero KPI Card */}
